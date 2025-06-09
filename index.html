@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tesla VIN Status</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: 'Roboto Condensed', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #e82127;
+      margin-bottom: 2rem;
+    }
+    input {
+      padding: 0.8rem;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: none;
+      width: 300px;
+      margin-bottom: 1rem;
+    }
+    button {
+      background-color: #e82127;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .status-card {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+      text-align: left;
+      width: 100%;
+      max-width: 400px;
+    }
+    .status-card p {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tesla VIN Status</h1>
+  <input id="vin-input" placeholder="Skriv inn VIN-nummer" />
+  <button onclick="checkStatus()">Sjekk status</button>
+  <div id="result" class="status-card" style="display:none;"></div>
+
+  <script>
+    function checkStatus() {
+      const vin = document.getElementById('vin-input').value.trim().toUpperCase();
+      if (vin.length < 5) return alert('Ugyldig VIN');
+
+      const statusList = ['Produksjon', 'Transport', 'Levert', 'Venter på levering'];
+      const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
+      const days = Math.floor(Math.random() * 14) + 1;
+      const km = Math.floor(Math.random() * 500);
+
+      const result = {
+        vin: vin,
+        status: random(statusList),
+        delivery_eta: `${days} dager`,
+        odometer: `${km} km`
+      };
+
+      const html = `
+        <p><strong>VIN:</strong> ${result.vin}</p>
+        <p><strong>Status:</strong> ${result.status}</p>
+        <p><strong>Estimert levering:</strong> ${result.delivery_eta}</p>
+        <p><strong>Kilometerstand:</strong> ${result.odometer}</p>
+      `;
+      const resultBox = document.getElementById('result');
+      resultBox.innerHTML = html;
+      resultBox.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
